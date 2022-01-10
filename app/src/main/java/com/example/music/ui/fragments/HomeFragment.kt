@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.music.adapters.SongAdapter
 import com.example.music.databinding.FragmentHomeBinding
-import com.example.music.other.Status
+import com.example.music.other.Status.*
 import com.example.music.ui.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -37,15 +37,15 @@ class HomeFragment : Fragment() {
         binding.rvAllSongs.adapter = songAdapter
         mainViewModel.mediaItems.observe(viewLifecycleOwner) {
             when (it.status) {
-                Status.SUCCESS -> {
+                SUCCESS -> {
                     binding.allSongsProgressBar.isVisible = false
                     songAdapter.submitList(it.data)
                 }
-                Status.ERROR -> {}
-                Status.LOADING -> {}
+                ERROR -> Unit
+                LOADING -> Unit
             }
         }
-        songAdapter.setOnItemClickListener {
+        songAdapter.setItemClickListener {
             mainViewModel.playOrToggleSong(it)
         }
     }

@@ -2,16 +2,13 @@ package com.example.music.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.bumptech.glide.RequestManager
-import com.example.music.databinding.ListItemBinding
+import com.example.music.databinding.SwipeItemBinding
 import javax.inject.Inject
 
-class SongAdapter @Inject constructor(
-    private val glide: RequestManager
-) : BaseSongAdapter() {
+class SwipeSongAdapter @Inject constructor() : BaseSongAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val holder = SongViewHolder(
-            ListItemBinding.inflate(
+            SwipeItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -27,10 +24,7 @@ class SongAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: SongViewHolder, position: Int) {
         val song = getItem(position)
-        (holder.binding as ListItemBinding).apply {
-            tvPrimary.text = song.title
-            tvSecondary.text = song.subtitle
-            glide.load(song.imageUrl).into(ivItemImage)
-        }
+        val text = "${song.title} - ${song.subtitle}"
+        (holder.binding as SwipeItemBinding).tvPrimary.text = text
     }
 }
