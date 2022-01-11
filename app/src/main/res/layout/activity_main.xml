@@ -19,6 +19,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/bottomBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="ivCurSongImage,vpSong,ivPlayPause" />
+
     <ImageView
         android:id="@+id/ivCurSongImage"
         android:layout_width="56dp"

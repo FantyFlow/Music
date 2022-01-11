@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.RequestManager
 import com.example.music.R
@@ -21,6 +23,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity() {
     private val mainViewModel by viewModels<MainViewModel>()
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+    private val navController by lazy { binding.fragmentContainerView.getFragment<NavHostFragment>().navController }
 
     @Inject
     lateinit var swipeSongAdapter: SwipeSongAdapter
@@ -108,6 +111,12 @@ class MainActivity : AppCompatActivity() {
             curPlayingSong?.let {
                 mainViewModel.playOrToggleSong(it, true)
             }
+        }
+        swipeSongAdapter.setItemClickListener {
+            navController.navigate(R.id.action_homeFragment_to_songFragment)
+        }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            binding.bottomBar.isVisible = destination.id != R.id.songFragment
         }
     }
 }
