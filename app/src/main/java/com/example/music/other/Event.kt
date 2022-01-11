@@ -1,8 +1,7 @@
 package com.example.music.other
 
 open class Event<out T>(private val data: T) {
-    var hasBeenHandled = false
-        private set
+    private var hasBeenHandled = false
 
     fun getContentIfNotHandled(): T? =
         if (hasBeenHandled) {
@@ -11,6 +10,4 @@ open class Event<out T>(private val data: T) {
             hasBeenHandled = true
             data
         }
-
-    fun peekContent() = data
 }
