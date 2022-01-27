@@ -62,9 +62,12 @@ class MusicService : MediaBrowserServiceCompat() {
             firebaseMusicSource.fetchMediaData()
         }
 
-        val activityIntent = packageManager?.getLaunchIntentForPackage(packageName)?.let {
-            PendingIntent.getActivity(this, 0, it, 0)
-        }
+        val activityIntent = PendingIntent.getActivity(
+            this,
+            0,
+            packageManager.getLaunchIntentForPackage(packageName),
+            0
+        )
         mediaSession = MediaSessionCompat(this, SERVICE_TAG).apply {
             setSessionActivity(activityIntent)
             isActive = true
