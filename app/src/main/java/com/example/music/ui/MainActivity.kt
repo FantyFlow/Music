@@ -1,14 +1,14 @@
 package com.example.music.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.RequestManager
+import coil.load
 import com.example.music.R
 import com.example.music.adapters.SwipeSongAdapter
 import com.example.music.data.entities.Song
@@ -27,9 +27,6 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var swipeSongAdapter: SwipeSongAdapter
-
-    @Inject
-    lateinit var glide: RequestManager
 
     private var curPlayingSong: Song? = null
 
@@ -53,8 +50,9 @@ class MainActivity : AppCompatActivity() {
             when (it.status) {
                 SUCCESS -> {
                     swipeSongAdapter.submitList(it.data)
-                    glide.load(curPlayingSong?.imageUrl ?: it.data?.get(0)?.imageUrl)
-                        .into(binding.ivCurSongImage)
+                    binding.ivCurSongImage.load(
+                        curPlayingSong?.imageUrl ?: it.data?.get(0)?.imageUrl
+                    )
                     if (curPlayingSong == null) {
                         return@observe
                     } else {
@@ -79,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                     iconUri.toString()
                 )
             }
-            glide.load(curPlayingSong?.imageUrl).into(binding.ivCurSongImage)
+            binding.ivCurSongImage.load(curPlayingSong?.imageUrl)
             if (curPlayingSong == null) {
                 return@observe
             } else {

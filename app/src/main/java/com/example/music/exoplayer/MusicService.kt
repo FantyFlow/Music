@@ -1,6 +1,8 @@
 package com.example.music.exoplayer
 
 import android.app.PendingIntent
+import android.app.PendingIntent.FLAG_IMMUTABLE
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
@@ -66,7 +68,7 @@ class MusicService : MediaBrowserServiceCompat() {
             this,
             0,
             packageManager.getLaunchIntentForPackage(packageName),
-            0
+            FLAG_IMMUTABLE or FLAG_UPDATE_CURRENT
         )
         mediaSession = MediaSessionCompat(this, SERVICE_TAG).apply {
             setSessionActivity(activityIntent)

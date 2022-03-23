@@ -1,10 +1,6 @@
 package com.example.music.di
 
 import android.content.Context
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.example.music.R
 import com.example.music.exoplayer.MusicServiceConnection
 import dagger.Module
 import dagger.Provides
@@ -20,13 +16,4 @@ object AppModule {
     @Provides
     fun provideMusicServiceConnection(@ApplicationContext context: Context) =
         MusicServiceConnection(context)
-
-    @Singleton
-    @Provides
-    fun provideGlideInstance(@ApplicationContext context: Context) =
-        Glide.with(context).setDefaultRequestOptions(
-            RequestOptions().placeholder(R.drawable.ic_music_video)
-                .error(R.drawable.ic_music_video)
-                .diskCacheStrategy(DiskCacheStrategy.DATA)
-        )
 }

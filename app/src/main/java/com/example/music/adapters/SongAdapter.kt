@@ -2,13 +2,11 @@ package com.example.music.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.bumptech.glide.RequestManager
+import coil.load
 import com.example.music.databinding.ListItemBinding
 import javax.inject.Inject
 
-class SongAdapter @Inject constructor(
-    private val glide: RequestManager
-) : BaseSongAdapter() {
+class SongAdapter @Inject constructor() : BaseSongAdapter() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SongViewHolder {
         val holder = SongViewHolder(
             ListItemBinding.inflate(
@@ -30,7 +28,7 @@ class SongAdapter @Inject constructor(
         (holder.binding as ListItemBinding).apply {
             tvPrimary.text = song.title
             tvSecondary.text = song.subtitle
-            glide.load(song.imageUrl).into(ivItemImage)
+            ivItemImage.load(song.imageUrl)
         }
     }
 }

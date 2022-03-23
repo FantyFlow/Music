@@ -3,12 +3,11 @@ package com.example.music.exoplayer
 import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
+import androidx.core.graphics.drawable.toBitmap
+import coil.imageLoader
+import coil.request.ImageRequest
 import com.example.music.R
 import com.example.music.other.Constants.NOTIFICATION_CHANNEL_ID
 import com.example.music.other.Constants.NOTIFICATION_ID
@@ -62,19 +61,13 @@ class MusicNotificationManager(
             player: Player,
             callback: PlayerNotificationManager.BitmapCallback
         ): Bitmap? {
-            Glide.with(context)
-                .asBitmap()
-                .load(mediaController.metadata.description.iconUri)
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        callback.onBitmap(resource)
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) = Unit
-                })
+            val request = ImageRequest.Builder(context)
+                .data(mediaController.metadata.description.iconUri)
+                .target {
+                    callback.onBitmap(it.toBitmap())
+                }
+                .build()
+            context.imageLoader.enqueue(request)
             return null
         }
     }

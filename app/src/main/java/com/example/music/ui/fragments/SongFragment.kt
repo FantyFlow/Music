@@ -3,14 +3,14 @@ package com.example.music.ui.fragments
 import android.os.Bundle
 import android.support.v4.media.session.PlaybackStateCompat
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.RequestManager
+import coil.load
 import com.example.music.R
 import com.example.music.data.entities.Song
 import com.example.music.databinding.FragmentSongBinding
@@ -21,7 +21,6 @@ import com.example.music.ui.viewmodels.SongViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SongFragment : Fragment() {
@@ -29,9 +28,6 @@ class SongFragment : Fragment() {
     private val binding get() = _binding!!
     private val mainViewModel by activityViewModels<MainViewModel>()
     private val songViewModel by viewModels<SongViewModel>()
-
-    @Inject
-    lateinit var glide: RequestManager
 
     private var curPlayingSong: Song? = null
 
@@ -128,7 +124,7 @@ class SongFragment : Fragment() {
     private fun updateTitleAndSongImage(song: Song) {
         val text = "${song.title} - ${song.subtitle}"
         binding.tvSongName.text = text
-        glide.load(song.imageUrl).into(binding.ivSongImage)
+        binding.ivSongImage.load(song.imageUrl)
     }
 
     override fun onDestroyView() {
