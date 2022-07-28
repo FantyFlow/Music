@@ -1,5 +1,6 @@
 package com.example.music.exoplayer.callbacks
 
+import android.app.Service
 import android.widget.Toast
 import com.example.music.exoplayer.MusicService
 import com.google.android.exoplayer2.PlaybackException
@@ -11,14 +12,14 @@ class MusicPlayerListener(
     override fun onPlaybackStateChanged(playbackState: Int) {
         super.onPlaybackStateChanged(playbackState)
         if (playbackState == Player.STATE_READY) {
-            musicService.stopForeground(false)
+            musicService.stopForeground(Service.STOP_FOREGROUND_DETACH)
         }
     }
 
     override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
         super.onPlayWhenReadyChanged(playWhenReady, reason)
         if (!playWhenReady) {
-            musicService.stopForeground(false)
+            musicService.stopForeground(Service.STOP_FOREGROUND_DETACH)
         }
     }
 

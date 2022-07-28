@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 SUCCESS -> {
                     swipeSongAdapter.submitList(it.data)
                     binding.ivCurSongImage.load(
-                        curPlayingSong?.imageUrl ?: it.data?.get(0)?.imageUrl
+                        curPlayingSong?.imageUrl ?: it.data?.firstOrNull()?.imageUrl
                     )
                     if (curPlayingSong == null) {
                         return@observe
@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+
                 ERROR -> Unit
                 LOADING -> Unit
             }
